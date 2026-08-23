@@ -1,0 +1,37 @@
+export type FileNode = {
+  type: 'file'
+  name: string
+  /** Route path this file opens. Files without a path are visually present but not navigable yet. */
+  path?: string
+}
+
+export type FolderNode = {
+  type: 'folder'
+  name: string
+  children: TreeNode[]
+}
+
+export type TreeNode = FileNode | FolderNode
+
+export const fileTree: FolderNode = {
+  type: 'folder',
+  name: 'portfolio',
+  children: [
+    { type: 'file', name: 'about.md', path: '/about' },
+    { type: 'file', name: 'skills.json' },
+    { type: 'file', name: 'profile.jpg' },
+    { type: 'file', name: 'experience.log' },
+    { type: 'file', name: 'resume.pdf' },
+    {
+      type: 'folder',
+      name: 'projects',
+      children: [
+        { type: 'file', name: 'techDemo.java' },
+        { type: 'file', name: 'portfolio.js' },
+        { type: 'file', name: 'eventDrivenPoc.java' },
+        { type: 'file', name: 'aiTestingExperiment.py' },
+      ],
+    },
+    { type: 'file', name: 'contact' },
+  ],
+}
