@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>portfolio</title>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      //
+      // GitHub Pages sirve este archivo para cualquier ruta que no coincide
+      // con un fichero real (ej. /projects/techdemo). Como no hay servidor
+      // que reescriba la URL a index.html, codificamos la ruta actual como
+      // query string y redirigimos a la raíz del sitio. El script en
+      // index.html decodifica esa query string y restaura la URL original
+      // con history.replaceState antes de que React Router monte.
+      var pathSegmentsToKeep = 1 // 1 = mantener "/portfolio" del repo
+
+      var l = window.location
+      l.replace(
+        l.protocol +
+          '//' +
+          l.hostname +
+          (l.port ? ':' + l.port : '') +
+          l.pathname
+            .split('/')
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join('/') +
+          '/?/' +
+          l.pathname
+            .slice(1)
+            .split('/')
+            .slice(pathSegmentsToKeep)
+            .join('/')
+            .replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash,
+      )
+    </script>
+  </head>
+  <body></body>
+</html>

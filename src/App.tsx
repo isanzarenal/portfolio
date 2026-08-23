@@ -4,7 +4,7 @@ import { About } from './pages/About'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<IdeLayout />}>
           <Route index element={<Navigate to="/about" replace />} />
