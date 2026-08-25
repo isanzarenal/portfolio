@@ -2,6 +2,7 @@ import { useLocation } from 'react-router'
 
 const ROUTE_SEGMENTS: Record<string, string[]> = {
   '/about': ['portfolio', 'about.md'],
+  '/skills': ['portfolio', 'skills.json'],
 }
 
 export function Breadcrumb() {

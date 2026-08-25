@@ -6,7 +6,10 @@ type Tab = {
   path?: string
 }
 
-const OPEN_TABS: Tab[] = [{ name: 'about.md', path: '/about' }, { name: 'skills.json' }]
+const OPEN_TABS: Tab[] = [
+  { name: 'about.md', path: '/about' },
+  { name: 'skills.json', path: '/skills' },
+]
 
 export function TabBar() {
   return (
