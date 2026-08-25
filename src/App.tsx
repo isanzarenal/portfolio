@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import { IdeLayout } from './layout/IdeLayout'
 import { TabsProvider } from './layout/TabsProvider'
 import { About } from './pages/About'
+import { Projects } from './pages/Projects'
 import { Skills } from './pages/Skills'
 import { Welcome } from './pages/Welcome'
 
@@ -13,6 +14,7 @@ export function AppRoutes() {
           <Route index element={<Welcome />} />
           <Route path="about" element={<About />} />
           <Route path="skills" element={<Skills />} />
+          <Route path="projects" element={<Projects />} />
         </Route>
       </Routes>
     </TabsProvider>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
-import { NavLink } from 'react-router'
+import { NavLink, useLocation, useNavigate } from 'react-router'
 import { fileTree, type TreeNode } from '../data/fileTree'
 import { getFileIcon, getFolderIcon } from '../lib/fileIcons'
 import { useTabs } from './tabsContext'
@@ -47,14 +47,29 @@ function FileRow({ node, depth }: { node: Extract<TreeNode, { type: 'file' }>; d
 function FolderRow({ node, depth }: { node: Extract<TreeNode, { type: 'folder' }>; depth: number }) {
   const [open, setOpen] = useState(true)
   const { Icon, className } = getFolderIcon(open)
+  const { openTab } = useTabs()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const path = node.path
+  const isActive = path !== undefined && location.pathname === path
+
+  function handleClick() {
+    setOpen((o) => !o)
+    if (path) {
+      openTab({ name: node.name, path })
+      navigate(path)
+    }
+  }
 
   return (
     <div>
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
+        onClick={handleClick}
         style={{ paddingLeft: 8 + depth * INDENT_PX }}
-        className="flex w-full cursor-pointer items-center gap-1 py-1 pr-2 text-left text-sm text-fg hover:bg-white/5"
+        className={`flex w-full cursor-pointer items-center gap-1 py-1 pr-2 text-left text-sm hover:bg-white/5 ${
+          isActive ? 'bg-accent/15 text-fg' : 'text-fg'
+        }`}
       >
         {open ? (
           <ChevronDown size={13} className="text-muted" />

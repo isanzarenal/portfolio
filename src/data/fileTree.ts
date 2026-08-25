@@ -1,3 +1,5 @@
+import { projects } from './projects'
+
 export type FileNode = {
   type: 'file'
   name: string
@@ -8,6 +10,8 @@ export type FileNode = {
 export type FolderNode = {
   type: 'folder'
   name: string
+  /** Route this folder opens when clicked, e.g. the projects/ index. Plain folders (no index view) omit this. */
+  path?: string
   children: TreeNode[]
 }
 
@@ -25,12 +29,11 @@ export const fileTree: FolderNode = {
     {
       type: 'folder',
       name: 'projects',
-      children: [
-        { type: 'file', name: 'techDemo.java' },
-        { type: 'file', name: 'portfolio.js' },
-        { type: 'file', name: 'eventDrivenPoc.java' },
-        { type: 'file', name: 'aiTestingExperiment.py' },
-      ],
+      path: '/projects',
+      children: projects.map((project) => ({
+        type: 'file',
+        name: project.fileName,
+      })),
     },
     { type: 'file', name: 'contact' },
   ],
