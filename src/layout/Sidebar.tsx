@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { NavLink, useLocation, useNavigate } from 'react-router'
 import { fileTree, type TreeNode } from '../data/fileTree'
@@ -6,6 +6,23 @@ import { getFileIcon, getFolderIcon } from '../lib/fileIcons'
 import { useTabs } from './tabsContext'
 
 const INDENT_PX = 14
+/** Fixed slot every row reserves for its chevron, so file/folder icons always start at the same x — files render it empty. */
+const CHEVRON_SLOT_PX = 14
+
+const MIN_SIDEBAR_WIDTH = 180
+const MAX_SIDEBAR_WIDTH = 400
+const DEFAULT_SIDEBAR_WIDTH = 325
+
+function ChevronSlot({ children }: { children?: ReactNode }) {
+  return (
+    <span
+      style={{ width: CHEVRON_SLOT_PX }}
+      className="flex shrink-0 items-center justify-center"
+    >
+      {children}
+    </span>
+  )
+}
 
 function FileRow({ node, depth }: { node: Extract<TreeNode, { type: 'file' }>; depth: number }) {
   const { Icon, className } = getFileIcon(node.name)
@@ -20,15 +37,16 @@ function FileRow({ node, depth }: { node: Extract<TreeNode, { type: 'file' }>; d
         onClick={() => openTab({ name: node.name, path })}
         style={style}
         className={({ isActive }) =>
-          `flex items-center gap-2 rounded py-1 pr-2 text-sm ${
+          `flex min-w-0 items-center gap-2 rounded py-1 pr-2 text-sm ${
             isActive
               ? 'bg-accent/15 text-fg'
               : 'text-fg hover:bg-white/5'
           }`
         }
       >
-        <Icon size={15} className={className} />
-        <span className="font-mono">{node.name}</span>
+        <ChevronSlot />
+        <Icon size={15} className={`shrink-0 ${className}`} />
+        <span className="min-w-0 flex-1 truncate font-mono">{node.name}</span>
       </NavLink>
     )
   }
@@ -36,10 +54,11 @@ function FileRow({ node, depth }: { node: Extract<TreeNode, { type: 'file' }>; d
   return (
     <div
       style={style}
-      className="flex cursor-default items-center gap-2 py-1 pr-2 text-sm text-fg/90"
+      className="flex min-w-0 cursor-default items-center gap-2 py-1 pr-2 text-sm text-fg/90"
     >
-      <Icon size={15} className={className} />
-      <span className="font-mono">{node.name}</span>
+      <ChevronSlot />
+      <Icon size={15} className={`shrink-0 ${className}`} />
+      <span className="min-w-0 flex-1 truncate font-mono">{node.name}</span>
     </div>
   )
 }
@@ -62,25 +81,27 @@ function FolderRow({ node, depth }: { node: Extract<TreeNode, { type: 'folder' }
   }
 
   return (
-    <div>
+    <div className="min-w-0">
       <button
         type="button"
         onClick={handleClick}
         style={{ paddingLeft: 8 + depth * INDENT_PX }}
-        className={`flex w-full cursor-pointer items-center gap-1 py-1 pr-2 text-left text-sm hover:bg-white/5 ${
+        className={`flex w-full min-w-0 cursor-pointer items-center gap-2 py-1 pr-2 text-left text-sm hover:bg-white/5 ${
           isActive ? 'bg-accent/15 text-fg' : 'text-fg'
         }`}
       >
-        {open ? (
-          <ChevronDown size={13} className="text-muted" />
-        ) : (
-          <ChevronRight size={13} className="text-muted" />
-        )}
-        <Icon size={15} className={className} />
-        <span className="font-mono">{node.name}/</span>
+        <ChevronSlot>
+          {open ? (
+            <ChevronDown size={13} className="text-muted" />
+          ) : (
+            <ChevronRight size={13} className="text-muted" />
+          )}
+        </ChevronSlot>
+        <Icon size={15} className={`shrink-0 ${className}`} />
+        <span className="min-w-0 flex-1 truncate font-mono">{node.name}/</span>
       </button>
       {open && (
-        <div>
+        <div className="min-w-0">
           {node.children.map((child) => (
             <TreeRow key={child.name} node={child} depth={depth + 1} />
           ))}
@@ -99,10 +120,41 @@ function TreeRow({ node, depth }: { node: TreeNode; depth: number }) {
 }
 
 export function Sidebar() {
+  const [width, setWidth] = useState(DEFAULT_SIDEBAR_WIDTH)
+  const [isResizing, setIsResizing] = useState(false)
+
+  useEffect(() => {
+    if (!isResizing) return
+
+    function handleMouseMove(event: MouseEvent) {
+      const next = Math.min(
+        MAX_SIDEBAR_WIDTH,
+        Math.max(MIN_SIDEBAR_WIDTH, event.clientX),
+      )
+      setWidth(next)
+    }
+    function handleMouseUp() {
+      setIsResizing(false)
+    }
+
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+
+    return () => {
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isResizing])
+
   return (
     <nav
       aria-label="Explorador de archivos"
-      className="flex w-60 shrink-0 flex-col overflow-y-auto border-r border-border bg-sidebar py-2"
+      style={{ width }}
+      className="relative flex shrink-0 flex-col overflow-x-hidden overflow-y-auto border-r border-border bg-sidebar py-2"
     >
       <div className="px-2 pb-1 font-mono text-xs text-muted">
         {fileTree.name}
@@ -110,6 +162,16 @@ export function Sidebar() {
       {fileTree.children.map((node) => (
         <TreeRow key={node.name} node={node} depth={0} />
       ))}
+
+      <div
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Redimensionar explorador de archivos"
+        onMouseDown={() => setIsResizing(true)}
+        className={`absolute top-0 right-0 h-full w-1 cursor-col-resize hover:bg-accent/40 ${
+          isResizing ? 'bg-accent/40' : ''
+        }`}
+      />
     </nav>
   )
 }

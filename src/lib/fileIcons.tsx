@@ -7,8 +7,8 @@ import {
   Folder,
   FolderOpen,
   Image,
+  MessageSquareText,
   ScrollText,
-  Terminal,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -34,7 +34,7 @@ const DEFAULT_ICON: IconMatch = { Icon: FileText, className: 'text-muted' }
 
 export function getFileIcon(name: string): IconMatch {
   if (name === 'contact') {
-    return { Icon: Terminal, className: 'text-muted' }
+    return { Icon: MessageSquareText, className: 'text-muted' }
   }
   const extension = name.split('.').pop()?.toLowerCase()
   if (!extension) return DEFAULT_ICON
