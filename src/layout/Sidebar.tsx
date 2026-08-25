@@ -3,17 +3,21 @@ import { ChevronDown, ChevronRight } from 'lucide-react'
 import { NavLink } from 'react-router'
 import { fileTree, type TreeNode } from '../data/fileTree'
 import { getFileIcon, getFolderIcon } from '../lib/fileIcons'
+import { useTabs } from './tabsContext'
 
 const INDENT_PX = 14
 
 function FileRow({ node, depth }: { node: Extract<TreeNode, { type: 'file' }>; depth: number }) {
   const { Icon, className } = getFileIcon(node.name)
+  const { openTab } = useTabs()
   const style = { paddingLeft: 8 + depth * INDENT_PX }
 
   if (node.path) {
+    const path = node.path
     return (
       <NavLink
-        to={node.path}
+        to={path}
+        onClick={() => openTab({ name: node.name, path })}
         style={style}
         className={({ isActive }) =>
           `flex items-center gap-2 rounded py-1 pr-2 text-sm ${

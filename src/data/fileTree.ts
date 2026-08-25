@@ -35,3 +35,20 @@ export const fileTree: FolderNode = {
     { type: 'file', name: 'contact' },
   ],
 }
+
+/** Finds the file node whose route path matches, e.g. for syncing open tabs to the current route. */
+export function findFileByPath(path: string): FileNode | undefined {
+  function search(nodes: TreeNode[]): FileNode | undefined {
+    for (const node of nodes) {
+      if (node.type === 'file') {
+        if (node.path === path) return node
+      } else {
+        const found = search(node.children)
+        if (found) return found
+      }
+    }
+    return undefined
+  }
+
+  return search(fileTree.children)
+}
