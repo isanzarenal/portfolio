@@ -9,7 +9,7 @@ export function TabBar() {
   return (
     <div
       aria-label="Pestañas abiertas"
-      className="flex h-9 shrink-0 items-stretch overflow-x-auto border-b border-border bg-sidebar"
+      className="tab-bar-scroll flex h-9 shrink-0 flex-nowrap items-stretch overflow-x-auto overflow-y-hidden border-b border-border bg-sidebar"
     >
       {openTabs.map((tab) => {
         const { Icon, className } = getFileIcon(tab.name)
@@ -22,7 +22,7 @@ export function TabBar() {
             <NavLink
               to={tab.path}
               className={({ isActive }) =>
-                `flex items-center gap-2 border-t-2 py-0 pl-3 pr-7 text-sm ${
+                `flex items-center gap-2 border-t-2 py-0 pl-3 pr-7 text-sm whitespace-nowrap ${
                   isActive
                     ? 'border-t-accent bg-editor text-fg'
                     : 'border-t-transparent text-muted hover:text-fg'

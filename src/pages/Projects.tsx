@@ -1,19 +1,10 @@
 import { Search } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
-import { projects, type ProjectStatus } from '../data/projects'
+import { useNavigate } from 'react-router'
+import { useTabs } from '../layout/tabsContext'
+import { projects, type Project } from '../data/projects'
 import { getFileIcon } from '../lib/fileIcons'
-
-const STATUS_LABELS: Record<ProjectStatus, string> = {
-  finished: 'finished',
-  'in-progress': 'in progress',
-  planned: 'planned',
-}
-
-const STATUS_BADGE_CLASSNAME: Record<ProjectStatus, string> = {
-  finished: 'border border-success/40 bg-success/10 text-success',
-  'in-progress': 'border border-warning/40 bg-warning/10 text-warning',
-  planned: 'border border-dashed border-muted/50 text-muted',
-}
+import { STATUS_BADGE_CLASSNAME, STATUS_LABELS } from '../lib/projectStatus'
 
 function highlightMatch(text: string, query: string): ReactNode {
   if (!query) return text
@@ -33,6 +24,8 @@ function highlightMatch(text: string, query: string): ReactNode {
 
 export function Projects() {
   const [query, setQuery] = useState('')
+  const navigate = useNavigate()
+  const { openTab } = useTabs()
   const normalizedQuery = query.trim().toLowerCase()
 
   const filteredProjects = normalizedQuery
@@ -47,6 +40,12 @@ export function Projects() {
 
   const activeCount = projects.filter((p) => p.status !== 'planned').length
   const plannedCount = projects.filter((p) => p.status === 'planned').length
+
+  function openProject(project: Project) {
+    const path = `/projects/${project.fileName}`
+    openTab({ name: project.fileName, path })
+    navigate(path)
+  }
 
   return (
     <div className="p-8">
@@ -80,10 +79,12 @@ export function Projects() {
         {filteredProjects.map((project) => {
           const { Icon, className } = getFileIcon(project.fileName)
           return (
-            <div
+            <button
               key={project.fileName}
+              type="button"
               role="listitem"
-              className={`flex items-center gap-3 px-2 py-2.5 ${
+              onClick={() => openProject(project)}
+              className={`flex w-full items-center gap-3 px-2 py-2.5 text-left hover:bg-white/5 ${
                 project.status === 'planned' ? 'opacity-60' : ''
               }`}
             >
@@ -96,7 +97,7 @@ export function Projects() {
               >
                 {STATUS_LABELS[project.status]}
               </span>
-            </div>
+            </button>
           )
         })}
       </div>

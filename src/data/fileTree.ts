@@ -33,6 +33,7 @@ export const fileTree: FolderNode = {
       children: projects.map((project) => ({
         type: 'file',
         name: project.fileName,
+        path: `/projects/${project.fileName}`,
       })),
     },
   ],

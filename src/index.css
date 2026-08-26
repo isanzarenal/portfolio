@@ -32,3 +32,22 @@ body {
   background: var(--color-editor);
   color: var(--color-fg);
 }
+
+/* Thin, discreet horizontal scrollbar for the tab bar (IDE style) — single overflow mechanism. */
+.tab-bar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.tab-bar-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tab-bar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tab-bar-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+}
