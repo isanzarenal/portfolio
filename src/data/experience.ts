@@ -20,6 +20,8 @@ export const experienceEntries: ExperienceEntry[] = [
     id: 'iberia-pagos',
     role: 'Senior Backend Developer',
     company: 'Iberia',
+    viaCompany: 'TMC',
+    logoUrl: `${import.meta.env.BASE_URL}\\companies\\iberia.jpg`,
     dateRange: '06-2026 — Actualmente',
     description:
       'Servicios de pagos de Iberia, un dominio crítico donde fiabilidad y trazabilidad son prioritarias. Mejora continua, migración y soporte de la plataforma.',
@@ -46,6 +48,7 @@ export const experienceEntries: ExperienceEntry[] = [
     role: 'Tech Lead',
     company: 'Banco Pichincha',
     viaCompany: 'TMC',
+    logoUrl: `${import.meta.env.BASE_URL}\\companies\\pichincha.png`,
     dateRange: '09-2025 — 05-2026',
     description:
       'Trabajando entre sistemas legacy y nuevos sistemas innovadores para mejorar las soluciones, implicado en análisis, diseño técnico, implementación, testing y aseguramiento de procesos técnicos y de calidad.',
@@ -83,6 +86,7 @@ export const experienceEntries: ExperienceEntry[] = [
     role: 'Technical Leader — Architecture',
     company: 'Proyecto blockchain — sector financiero',
     viaCompany: 'TMC',
+    logoUrl: `${import.meta.env.BASE_URL}\\companies\\allfundsBlockchain.jpg`,
     dateRange: '01-2025 — 08-2025',
     description:
       'Contribuyendo al diseño técnico y evolución arquitectónica de productos basados en blockchain para el sector financiero, con foco en interoperabilidad, escalabilidad y calidad de código.',
@@ -113,6 +117,8 @@ export const experienceEntries: ExperienceEntry[] = [
     id: 'inditex-sostenibilidad',
     role: 'Technical Leader',
     company: 'Inditex — MVP Sostenibilidad Cadena de Suministro',
+    viaCompany: 'TMC',
+    logoUrl: `${import.meta.env.BASE_URL}\\companies\\inditex.jpg`,
     dateRange: '2023 — 2024',
     description:
       'Puesta en marcha de un nuevo equipo de desarrollo para entregar un MVP en una nueva plataforma de Sostenibilidad de la Cadena de Suministro de Producto en Inditex, líder mundial en el sector de la moda.',
@@ -153,6 +159,8 @@ export const experienceEntries: ExperienceEntry[] = [
     id: 'inditex-web-fabrica',
     role: 'Technical Leader',
     company: 'Inditex — web y aplicación de fábrica',
+    viaCompany: 'TMC',
+    logoUrl: `${import.meta.env.BASE_URL}\\companies\\inditex.jpg`,
     dateRange: '2022 — 2023',
     description:
       'Líder técnico del equipo a cargo del desarrollo de la web y aplicación de fábrica de Inditex.',
@@ -189,7 +197,8 @@ export const experienceEntries: ExperienceEntry[] = [
   {
     id: 'novabase',
     role: 'Tech Leader — Team leader',
-    company: 'Novabase (Goldcar, Europcar, Knorr-Bremse)',
+    company: 'Novabase (Europcar, Goldcar, Knorr-Bremse)',
+    logoUrl: `${import.meta.env.BASE_URL}\\companies\\europcar.jpg`,
     dateRange: '09-2018 — 08-2022',
     description:
       'Tech lead en la software factory de Novabase, aplicando metodologías ágiles, velando por la filosofía de calidad y procesos, así como por la colaboración y el mentoring, trabajando integrado o de forma independiente en clientes como Goldcar, Europcar y Knorr-Bremse.',
@@ -223,6 +232,7 @@ export const experienceEntries: ExperienceEntry[] = [
     id: 'futurespace',
     role: 'J2EE Programmer Analyst',
     company: 'Futurespace (Policía Nacional, Libsafe, clínica estética)',
+    logoUrl: `${import.meta.env.BASE_URL}\\companies\\policiaNacional.jpg`,
     dateRange: '2011 — 2018',
     description:
       'Inicio de carrera en Futurespace, comenzando como becario en el proyecto de la Policía Nacional y creciendo hasta programador analista J2EE. Desarrollo del producto propio de preservación digital Libsafe (para clientes como Real Academia Española, Xunta de Galicia, Filmoteca de Catalunya, Ayto. de Madrid) y de un sistema de gestión de pacientes para clínica estética.',

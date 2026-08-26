@@ -24,7 +24,7 @@ function CompanyLogo({ company, logoUrl }: { company: string; logoUrl?: string }
       <img
         src={logoUrl}
         alt={`Logo de ${company}`}
-        className="h-10 w-10 shrink-0 rounded-md border border-border object-contain"
+        className="h-[76px] w-[76px] shrink-0 rounded-md border border-border object-contain"
       />
     )
   }
@@ -33,9 +33,9 @@ function CompanyLogo({ company, logoUrl }: { company: string; logoUrl?: string }
     <div
       role="img"
       aria-label={`Logo de ${company} no disponible`}
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-sidebar text-muted"
+      className="flex h-[76px] w-[76px] shrink-0 items-center justify-center rounded-md border border-border bg-sidebar text-muted"
     >
-      <Building2 size={18} />
+      <Building2 size={32} />
     </div>
   )
 }
@@ -58,7 +58,7 @@ function ExperienceRow({
         onClick={onToggle}
         aria-expanded={isExpanded}
         aria-label={`${isExpanded ? 'Colapsar' : 'Expandir'} ${entry.company}`}
-        className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-white/5"
+        className="flex w-full items-center gap-4 px-4 py-5 text-left hover:bg-white/5"
       >
         <CompanyLogo company={entry.company} logoUrl={entry.logoUrl} />
 
