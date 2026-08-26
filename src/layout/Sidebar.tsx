@@ -72,8 +72,11 @@ function FolderRow({ node, depth }: { node: Extract<TreeNode, { type: 'folder' }
   const path = node.path
   const isActive = path !== undefined && location.pathname === path
 
-  function handleClick() {
+  function handleToggle() {
     setOpen((o) => !o)
+  }
+
+  function handleOpen() {
     if (path) {
       openTab({ name: node.name, path })
       navigate(path)
@@ -82,24 +85,35 @@ function FolderRow({ node, depth }: { node: Extract<TreeNode, { type: 'folder' }
 
   return (
     <div className="min-w-0">
-      <button
-        type="button"
-        onClick={handleClick}
+      <div
         style={{ paddingLeft: 8 + depth * INDENT_PX }}
-        className={`flex w-full min-w-0 cursor-pointer items-center gap-2 py-1 pr-2 text-left text-sm hover:bg-white/5 ${
+        className={`flex w-full min-w-0 items-center gap-2 py-1 pr-2 text-sm hover:bg-white/5 ${
           isActive ? 'bg-accent/15 text-fg' : 'text-fg'
         }`}
       >
-        <ChevronSlot>
-          {open ? (
-            <ChevronDown size={13} className="text-muted" />
-          ) : (
-            <ChevronRight size={13} className="text-muted" />
-          )}
-        </ChevronSlot>
-        <Icon size={15} className={`shrink-0 ${className}`} />
-        <span className="min-w-0 flex-1 truncate font-mono">{node.name}/</span>
-      </button>
+        <button
+          type="button"
+          onClick={handleToggle}
+          aria-label={open ? `Colapsar ${node.name}` : `Expandir ${node.name}`}
+          className="cursor-pointer"
+        >
+          <ChevronSlot>
+            {open ? (
+              <ChevronDown size={13} className="text-muted" />
+            ) : (
+              <ChevronRight size={13} className="text-muted" />
+            )}
+          </ChevronSlot>
+        </button>
+        <button
+          type="button"
+          onClick={handleOpen}
+          className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 text-left"
+        >
+          <Icon size={15} className={`shrink-0 ${className}`} />
+          <span className="min-w-0 flex-1 truncate font-mono">{node.name}/</span>
+        </button>
+      </div>
       {open && (
         <div className="min-w-0">
           {node.children.map((child) => (
