@@ -51,6 +51,22 @@ function FileRow({ node, depth }: { node: Extract<TreeNode, { type: 'file' }>; d
     )
   }
 
+  if (node.href) {
+    return (
+      <a
+        href={node.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={style}
+        className="flex min-w-0 items-center gap-2 rounded py-1 pr-2 text-sm text-fg hover:bg-white/5"
+      >
+        <ChevronSlot />
+        <Icon size={15} className={`shrink-0 ${className}`} />
+        <span className="min-w-0 flex-1 truncate font-mono">{node.name}</span>
+      </a>
+    )
+  }
+
   return (
     <div
       style={style}

@@ -8,7 +8,7 @@ import {
   FolderOpen,
   Image,
   MessageSquareText,
-  ScrollText,
+  RotateCcwClock,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -23,7 +23,7 @@ const EXTENSION_ICONS: Record<string, IconMatch> = {
   jpg: { Icon: Image, className: 'text-success' },
   jpeg: { Icon: Image, className: 'text-success' },
   png: { Icon: Image, className: 'text-success' },
-  log: { Icon: ScrollText, className: 'text-muted' },
+  log: { Icon: RotateCcwClock, className: 'text-success' },
   pdf: { Icon: FileType2, className: 'text-muted' },
   java: { Icon: Coffee, className: 'text-type' },
   js: { Icon: FileCode, className: 'text-warning' },
@@ -34,7 +34,7 @@ const DEFAULT_ICON: IconMatch = { Icon: FileText, className: 'text-muted' }
 
 export function getFileIcon(name: string): IconMatch {
   if (name === 'contact') {
-    return { Icon: MessageSquareText, className: 'text-muted' }
+    return { Icon: MessageSquareText, className: 'text-keyword' }
   }
   const extension = name.split('.').pop()?.toLowerCase()
   if (!extension) return DEFAULT_ICON

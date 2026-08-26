@@ -63,4 +63,23 @@ describe('dynamic tabs', () => {
       await screen.findByText(/ningún archivo abierto/),
     ).toBeInTheDocument()
   })
+
+  it('opens resume.pdf as an external link in a new browser tab, not as an internal editor tab', () => {
+    renderApp()
+
+    const sidebar = screen.getByLabelText('Explorador de archivos')
+    const tabBar = screen.getByLabelText('Pestañas abiertas')
+    const resumeLink = within(sidebar).getByText('resume.pdf').closest('a')
+
+    expect(resumeLink).toHaveAttribute(
+      'href',
+      `${import.meta.env.BASE_URL}resume.pdf`,
+    )
+    expect(resumeLink).toHaveAttribute('target', '_blank')
+    expect(resumeLink).toHaveAttribute('rel', 'noopener noreferrer')
+
+    fireEvent.click(resumeLink!)
+
+    expect(within(tabBar).queryByText('resume.pdf')).not.toBeInTheDocument()
+  })
 })

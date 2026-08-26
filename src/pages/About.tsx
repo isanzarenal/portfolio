@@ -1,3 +1,4 @@
+import { MarkdownHeading } from '../components/MarkdownHeading'
 import { aboutStack } from '../data/about'
 
 export function About() {
@@ -22,9 +23,7 @@ export function About() {
           </p>
 
           <div className="pt-3">
-            <p className="text-string">
-              <span className="text-muted">##</span> stack
-            </p>
+            <MarkdownHeading>stack</MarkdownHeading>
             <div className="pl-1">
               {Object.entries(aboutStack).map(([category, technologies]) => (
                 <p key={category}>

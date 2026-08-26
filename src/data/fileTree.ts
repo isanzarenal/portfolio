@@ -3,8 +3,10 @@ import { projects } from './projects'
 export type FileNode = {
   type: 'file'
   name: string
-  /** Route path this file opens. Files without a path are visually present but not navigable yet. */
+  /** Route path this file opens as an internal editor tab. Files without a path/href are visually present but not navigable yet. */
   path?: string
+  /** External URL opened in a new browser tab instead of an internal tab — e.g. resume.pdf, which the browser's native PDF viewer handles better than an embedded view. Mutually exclusive with `path`. */
+  href?: string
 }
 
 export type FolderNode = {
@@ -23,9 +25,14 @@ export const fileTree: FolderNode = {
   children: [
     { type: 'file', name: 'about.md', path: '/about' },
     { type: 'file', name: 'skills.json', path: '/skills' },
+    { type: 'file', name: 'contributing.md', path: '/contributing' },
     { type: 'file', name: 'experience.log', path: '/experience' },
-    { type: 'file', name: 'resume.pdf' },
-    { type: 'file', name: 'contact' },
+    {
+      type: 'file',
+      name: 'resume.pdf',
+      href: `${import.meta.env.BASE_URL}resume.pdf`,
+    },
+    { type: 'file', name: 'contact', path: '/contact' },
     {
       type: 'folder',
       name: 'projects',
