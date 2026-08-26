@@ -23,7 +23,7 @@ export const fileTree: FolderNode = {
   children: [
     { type: 'file', name: 'about.md', path: '/about' },
     { type: 'file', name: 'skills.json', path: '/skills' },
-    { type: 'file', name: 'experience.log' },
+    { type: 'file', name: 'experience.log', path: '/experience' },
     { type: 'file', name: 'resume.pdf' },
     { type: 'file', name: 'contact' },
     {

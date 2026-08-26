@@ -3,6 +3,7 @@ import { useLocation } from 'react-router'
 const ROUTE_SEGMENTS: Record<string, string[]> = {
   '/about': ['portfolio', 'about.md'],
   '/skills': ['portfolio', 'skills.json'],
+  '/experience': ['portfolio', 'experience.log'],
   '/projects': ['portfolio', 'projects'],
 }
 
